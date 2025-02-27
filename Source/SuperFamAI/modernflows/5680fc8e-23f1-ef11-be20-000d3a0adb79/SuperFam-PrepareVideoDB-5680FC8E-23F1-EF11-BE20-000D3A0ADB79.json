@@ -1,0 +1,582 @@
+{
+  "properties": {
+    "connectionReferences": {
+      "shared_commondataserviceforapps": {
+        "api": {
+          "name": "shared_commondataserviceforapps"
+        },
+        "connection": {
+          "connectionReferenceLogicalName": "dev_sharedcommondataserviceforapps_c7381"
+        },
+        "runtimeSource": "embedded"
+      },
+      "shared_dev-5fvideo-20indexer-20for-20nlp-5f288c598e05251a12": {
+        "api": {
+          "name": "shared_dev-5fvideo-20indexer-20for-20nlp-5f288c598e05251a12",
+          "logicalName": "dev_5Fvideo-20indexer-20for-20nlp"
+        },
+        "connection": {
+          "connectionReferenceLogicalName": "dev_SuperFamVideoIndexerforNLPCR"
+        },
+        "runtimeSource": "invoker"
+      },
+      "shared_azureblob": {
+        "api": {
+          "name": "shared_azureblob"
+        },
+        "connection": {
+          "connectionReferenceLogicalName": "dev_sharedazureblob_da351"
+        },
+        "runtimeSource": "invoker"
+      },
+      "shared_dev-5fazure-20ai-20search-20indexer-5f288c598e05251a12": {
+        "api": {
+          "name": "shared_dev-5fazure-20ai-20search-20indexer-5f288c598e05251a12",
+          "logicalName": "dev_5Fazure-20ai-20search-20indexer"
+        },
+        "connection": {
+          "connectionReferenceLogicalName": "dev_SuperFamAzureAISearchIndexer"
+        },
+        "runtimeSource": "invoker"
+      }
+    },
+    "definition": {
+      "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+      "contentVersion": "1.0.0.0",
+      "parameters": {
+        "$authentication": {
+          "defaultValue": {},
+          "type": "SecureObject"
+        },
+        "$connections": {
+          "defaultValue": {},
+          "type": "Object"
+        },
+        "SuperFam VI Location (dev_SuperFamVILocation)": {
+          "defaultValue": "trial",
+          "type": "String",
+          "metadata": {
+            "schemaName": "dev_SuperFamVILocation",
+            "description": "The location of video indexer service."
+          }
+        },
+        "SuperFam AI Search Indexer (dev_SuperFamAISearchIndexer)": {
+          "defaultValue": "vector-powerful-devs-hack-indexer",
+          "type": "String",
+          "metadata": {
+            "schemaName": "dev_SuperFamAISearchIndexer",
+            "description": "The name of indexer created on your AI search service."
+          }
+        }
+      },
+      "triggers": {
+        "manual": {
+          "metadata": {
+            "operationMetadataId": "d0f63e69-2b32-46b4-96d3-9964197d95a9"
+          },
+          "type": "Request",
+          "kind": "Button",
+          "inputs": {
+            "schema": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          },
+          "description": "For this version, the preparation of the video prompt database (Azure AI Search Vector) is need to be done manually."
+        }
+      },
+      "actions": {
+        "Init_varNeedReindexing": {
+          "runAfter": {},
+          "metadata": {
+            "operationMetadataId": "0e55e197-621a-45a0-9b99-319e340e843c"
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "varNeedReindexing",
+                "type": "boolean",
+                "value": false
+              }
+            ]
+          },
+          "description": "The varNeedReindexing variable tracks whether a new video has been uploaded, indicating that the Azure Search Index needs to be refreshed."
+        },
+        "List_Videos_from_Video_Indexer": {
+          "actions": {
+            "Get_VI_Account_ID": {
+              "metadata": {
+                "operationMetadataId": "8481acc3-776a-40b9-aae3-4e800c4ae997"
+              },
+              "type": "OpenApiConnection",
+              "inputs": {
+                "parameters": {
+                  "actionName": "RetrieveEnvironmentVariableSecretValue",
+                  "item/EnvironmentVariableName": "dev_SuperFamVIAccountId"
+                },
+                "host": {
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps",
+                  "operationId": "PerformUnboundAction",
+                  "connectionName": "shared_commondataserviceforapps"
+                },
+                "retryPolicy": {
+                  "type": "none"
+                }
+              },
+              "description": "The Video Indexer account ID is securely stored as an environment variable. Retrieving its secret value from the environment.",
+              "runtimeConfiguration": {
+                "secureData": {
+                  "properties": [
+                    "inputs",
+                    "outputs"
+                  ]
+                }
+              }
+            },
+            "Get_VI_Account_Access_Token": {
+              "runAfter": {
+                "Get_VI_Account_ID": [
+                  "Succeeded"
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "93925c2f-7cce-44c5-bf60-7c5334b6b29a"
+              },
+              "type": "OpenApiConnection",
+              "inputs": {
+                "parameters": {
+                  "location": "@parameters('SuperFam VI Location (dev_SuperFamVILocation)')",
+                  "accountId": "@outputs('Get_VI_Account_ID')?['body/EnvironmentVariableSecretValue']",
+                  "allowEdit": true
+                },
+                "host": {
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_dev-5fvideo-20indexer-20for-20nlp-5f288c598e05251a12",
+                  "operationId": "GetAccessToken",
+                  "connectionName": "shared_dev-5fvideo-20indexer-20for-20nlp-5f288c598e05251a12"
+                },
+                "retryPolicy": {
+                  "type": "none"
+                }
+              },
+              "description": "Generating the access token required to create prompt content for videos. The \"allowEdit\" parameter is set to true since creating prompt content requires contribute permissions.",
+              "runtimeConfiguration": {
+                "secureData": {
+                  "properties": [
+                    "inputs",
+                    "outputs"
+                  ]
+                }
+              }
+            },
+            "List_All_Videos_from_VI": {
+              "runAfter": {
+                "Get_VI_Account_Access_Token": [
+                  "Succeeded"
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "4ea7ec7d-ad62-447f-bc4a-92c6ecc60a82"
+              },
+              "type": "OpenApiConnection",
+              "inputs": {
+                "parameters": {
+                  "location": "@parameters('SuperFam VI Location (dev_SuperFamVILocation)')",
+                  "accountId": "@outputs('Get_VI_Account_ID')?['body/EnvironmentVariableSecretValue']",
+                  "accessToken": "@body('Get_VI_Account_Access_Token')"
+                },
+                "host": {
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_dev-5fvideo-20indexer-20for-20nlp-5f288c598e05251a12",
+                  "operationId": "ListVideos",
+                  "connectionName": "shared_dev-5fvideo-20indexer-20for-20nlp-5f288c598e05251a12"
+                },
+                "retryPolicy": {
+                  "type": "none"
+                }
+              },
+              "description": "Listing all videos from Video Indexer (VI). For now, ignoring parameters like \"createdAfter\" and \"createdBefore\". In the future, this flow will track the last execution time and fetch videos from that date onward and handle paging.",
+              "runtimeConfiguration": {
+                "secureData": {
+                  "properties": [
+                    "inputs",
+                    "outputs"
+                  ]
+                }
+              }
+            }
+          },
+          "runAfter": {
+            "Init_varNeedReindexing": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "4e13c481-6d2d-497a-8cec-034dce98c0ef"
+          },
+          "type": "Scope",
+          "description": "This block contains actions to retrieve all videos from Video Indexer."
+        },
+        "List_Prompt_Content_from_Azure_Storage": {
+          "actions": {
+            "Lists_Prompt_Content_from_Blobs": {
+              "metadata": {
+                "JTJmdmktcHJvbXB0LWNvbnRlbnQ=": "/vi-prompt-content",
+                "operationMetadataId": "e22fbfc7-1e37-4aa3-a561-a46791e0b44e"
+              },
+              "type": "OpenApiConnection",
+              "inputs": {
+                "parameters": {
+                  "dataset": "AccountNameFromSettings",
+                  "id": "JTJmdmktcHJvbXB0LWNvbnRlbnQ=",
+                  "nextPageMarker": "",
+                  "useFlatListing": false
+                },
+                "host": {
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_azureblob",
+                  "operationId": "ListFolder_V4",
+                  "connectionName": "shared_azureblob"
+                },
+                "retryPolicy": {
+                  "type": "none"
+                }
+              },
+              "description": "Listing all uploaded prompt content from Blob Storage.",
+              "runtimeConfiguration": {
+                "secureData": {
+                  "properties": [
+                    "inputs",
+                    "outputs"
+                  ]
+                }
+              }
+            }
+          },
+          "runAfter": {
+            "Init_varNeedReindexing": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "bde8c4e8-184b-4ec8-88fd-7110e1f561c6"
+          },
+          "type": "Scope",
+          "description": "This block contains actions to retrieve all uploaded prompt content from Blob Storage."
+        },
+        "ForEach_Videos_in_VI": {
+          "foreach": "@outputs('List_All_Videos_from_VI')?['body/results']",
+          "actions": {
+            "Check_Prompt_Content_on_Blob": {
+              "actions": {},
+              "runAfter": {
+                "Filter_Blob_by_Video_ID": [
+                  "Succeeded"
+                ]
+              },
+              "else": {
+                "actions": {
+                  "Create_Video_Prompt_Content": {
+                    "metadata": {
+                      "operationMetadataId": "b1a8a968-f496-4abc-9f78-c6b11bcf1b7e"
+                    },
+                    "type": "OpenApiConnection",
+                    "inputs": {
+                      "parameters": {
+                        "location": "@parameters('SuperFam VI Location (dev_SuperFamVILocation)')",
+                        "accountId": "@outputs('Get_VI_Account_ID')?['body/EnvironmentVariableSecretValue']",
+                        "videoId": "@item()?['id']",
+                        "accessToken": "@body('Get_VI_Account_Access_Token')"
+                      },
+                      "host": {
+                        "apiId": "/providers/Microsoft.PowerApps/apis/shared_dev-5fvideo-20indexer-20for-20nlp-5f288c598e05251a12",
+                        "operationId": "CreatePromptContent",
+                        "connectionName": "shared_dev-5fvideo-20indexer-20for-20nlp-5f288c598e05251a12"
+                      },
+                      "retryPolicy": {
+                        "type": "none"
+                      }
+                    },
+                    "description": "Creating prompt content for the video. Occasionally, an exception occurs, but the process completes in the background.",
+                    "runtimeConfiguration": {
+                      "secureData": {
+                        "properties": [
+                          "inputs",
+                          "outputs"
+                        ]
+                      }
+                    }
+                  },
+                  "Delay_-_2_Minutes": {
+                    "runAfter": {
+                      "Create_Video_Prompt_Content": [
+                        "Succeeded",
+                        "Failed",
+                        "TimedOut"
+                      ]
+                    },
+                    "metadata": {
+                      "operationMetadataId": "c4ec6790-7749-4f82-9670-8794a0914801"
+                    },
+                    "type": "Wait",
+                    "inputs": {
+                      "interval": {
+                        "count": 2,
+                        "unit": "Minute"
+                      }
+                    },
+                    "description": "The prompt content creation process takes 1–2 minutes, so adding a delay to ensure completion."
+                  },
+                  "Get_Video_Prompt_Content": {
+                    "runAfter": {
+                      "Delay_-_2_Minutes": [
+                        "Succeeded"
+                      ]
+                    },
+                    "metadata": {
+                      "operationMetadataId": "dc22c9f5-2e57-4831-aa34-fbff31e89d8f"
+                    },
+                    "type": "OpenApiConnection",
+                    "inputs": {
+                      "parameters": {
+                        "location": "@parameters('SuperFam VI Location (dev_SuperFamVILocation)')",
+                        "accountId": "@outputs('Get_VI_Account_ID')?['body/EnvironmentVariableSecretValue']",
+                        "videoId": "@item()?['id']",
+                        "accessToken": "@body('Get_VI_Account_Access_Token')"
+                      },
+                      "host": {
+                        "apiId": "/providers/Microsoft.PowerApps/apis/shared_dev-5fvideo-20indexer-20for-20nlp-5f288c598e05251a12",
+                        "operationId": "GetPromptContent",
+                        "connectionName": "shared_dev-5fvideo-20indexer-20for-20nlp-5f288c598e05251a12"
+                      },
+                      "retryPolicy": {
+                        "type": "none"
+                      }
+                    },
+                    "description": "Getting prompt content for the video. ",
+                    "runtimeConfiguration": {
+                      "secureData": {
+                        "properties": [
+                          "inputs",
+                          "outputs"
+                        ]
+                      }
+                    }
+                  },
+                  "Upload_prompt_content": {
+                    "runAfter": {
+                      "Add_Video_Id_": [
+                        "Succeeded"
+                      ]
+                    },
+                    "metadata": {
+                      "operationMetadataId": "bba8211b-cc56-450c-a3b0-51393723a4d2"
+                    },
+                    "type": "OpenApiConnection",
+                    "inputs": {
+                      "parameters": {
+                        "storageAccountName": "AccountNameFromSettings",
+                        "folderPath": "/vi-prompt-content",
+                        "name": "@item()?['id']",
+                        "body": "@outputs('Add_Video_Id_')",
+                        "Content-Type": "application/json"
+                      },
+                      "host": {
+                        "apiId": "/providers/Microsoft.PowerApps/apis/shared_azureblob",
+                        "operationId": "CreateBlockBlob_V2",
+                        "connectionName": "shared_azureblob"
+                      },
+                      "retryPolicy": {
+                        "type": "none"
+                      }
+                    },
+                    "description": "Uploading video prompt content to Azure Blob Storage.",
+                    "runtimeConfiguration": {
+                      "contentTransfer": {
+                        "transferMode": "Chunked"
+                      },
+                      "secureData": {
+                        "properties": [
+                          "inputs",
+                          "outputs"
+                        ]
+                      }
+                    }
+                  },
+                  "Set_varNeedReindexing_to_true": {
+                    "runAfter": {
+                      "Upload_prompt_content": [
+                        "Succeeded"
+                      ]
+                    },
+                    "metadata": {
+                      "operationMetadataId": "8e6f5b72-9ede-41b2-b768-225e1d3a3897"
+                    },
+                    "type": "SetVariable",
+                    "inputs": {
+                      "name": "varNeedReindexing",
+                      "value": true
+                    },
+                    "description": "Setting varNeedReindexing to true to indicate that Azure Search indexing needs to be refreshed."
+                  },
+                  "Add_Video_Id_": {
+                    "runAfter": {
+                      "Get_Video_Prompt_Content": [
+                        "Succeeded"
+                      ]
+                    },
+                    "metadata": {
+                      "operationMetadataId": "e40984f4-0c5c-4803-9acd-476d61bdf613"
+                    },
+                    "type": "Compose",
+                    "inputs": "@replace(string(body('Get_Video_Prompt_Content')), '[Video title]', concat('[Video Id] ', item()['id'], '\\n[Video title]'))",
+                    "description": "The video Id property is missing in the returned video prompt content, so adding it to the JSON manually.",
+                    "runtimeConfiguration": {
+                      "secureData": {
+                        "properties": [
+                          "inputs"
+                        ]
+                      }
+                    }
+                  }
+                }
+              },
+              "expression": {
+                "and": [
+                  {
+                    "not": {
+                      "equals": [
+                        "@length(body('Filter_Blob_by_Video_ID'))",
+                        0
+                      ]
+                    }
+                  }
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "c595f835-252a-4da3-9af1-7d059ec14565"
+              },
+              "type": "If",
+              "description": "Checking if prompt content already exists in Blob Storage for the video."
+            },
+            "Video_Id": {
+              "metadata": {
+                "operationMetadataId": "e1342ad3-4b6f-40fc-8f0b-a7206316f9a1"
+              },
+              "type": "Compose",
+              "inputs": "@item()?['id']",
+              "description": "To avoid conflicts between item('Id') and item('id') in the Filter action, storing the actual video ID separately.",
+              "runtimeConfiguration": {
+                "secureData": {
+                  "properties": [
+                    "inputs"
+                  ]
+                }
+              }
+            },
+            "Filter_Blob_by_Video_ID": {
+              "runAfter": {
+                "Video_Id": [
+                  "Succeeded"
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "c9763e3a-a573-45cb-a7fb-7cd4a6f3af35"
+              },
+              "type": "Query",
+              "inputs": {
+                "from": "@outputs('Lists_Prompt_Content_from_Blobs')?['body/value']",
+                "where": "@equals(item()?['Name'], outputs('Video_Id'))"
+              },
+              "description": "Filtering Azure Blob Storage by Video Indexer Video ID.",
+              "runtimeConfiguration": {
+                "secureData": {
+                  "properties": [
+                    "inputs",
+                    "outputs"
+                  ]
+                }
+              }
+            }
+          },
+          "runAfter": {
+            "List_Videos_from_Video_Indexer": [
+              "Succeeded"
+            ],
+            "List_Prompt_Content_from_Azure_Storage": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "633e1d11-a068-47e0-a2e5-6a6c2dc7d31a"
+          },
+          "type": "Foreach",
+          "description": "Looping through all videos in Video Indexer.",
+          "runtimeConfiguration": {
+            "concurrency": {
+              "repetitions": 20
+            }
+          }
+        },
+        "Check_Reindexing_needed": {
+          "actions": {
+            "Run_Azure_AI_Search_Indexer": {
+              "metadata": {
+                "operationMetadataId": "44a56d33-e381-4a05-a4d3-bc024076bf86"
+              },
+              "type": "OpenApiConnection",
+              "inputs": {
+                "parameters": {
+                  "indexerName": "@parameters('SuperFam AI Search Indexer (dev_SuperFamAISearchIndexer)')",
+                  "api-version": "2024-07-01"
+                },
+                "host": {
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_dev-5fazure-20ai-20search-20indexer-5f288c598e05251a12",
+                  "operationId": "RunIndexer",
+                  "connectionName": "shared_dev-5fazure-20ai-20search-20indexer-5f288c598e05251a12"
+                },
+                "retryPolicy": {
+                  "type": "none"
+                }
+              },
+              "description": "Running Azure AI Search Indexer on demand to refresh the indexes.",
+              "runtimeConfiguration": {
+                "secureData": {
+                  "properties": [
+                    "inputs",
+                    "outputs"
+                  ]
+                }
+              }
+            }
+          },
+          "runAfter": {
+            "ForEach_Videos_in_VI": [
+              "Succeeded"
+            ]
+          },
+          "else": {
+            "actions": {}
+          },
+          "expression": {
+            "and": [
+              {
+                "equals": [
+                  "@variables('varNeedReindexing')",
+                  true
+                ]
+              }
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "fd2c178c-08bb-45d5-85cd-b90cd1d55184"
+          },
+          "type": "If",
+          "description": "Checking if varNeedReindexing is set to true."
+        }
+      },
+      "description": "This flow will extract insights from Azure AI Video Indexer, structure them, and store them in Azure AI Search for easy retrieval by LLMs."
+    },
+    "templateName": null
+  },
+  "schemaVersion": "1.0.0.0"
+}

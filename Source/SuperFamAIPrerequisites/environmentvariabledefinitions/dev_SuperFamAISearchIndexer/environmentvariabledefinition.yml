@@ -1,0 +1,17 @@
+environmentvariabledefinition:
+  '@schemaname': dev_SuperFamAISearchIndexer
+  description:
+    '@default': The name of indexer created on your AI search service.
+    label:
+      '@description': The name of indexer created on your AI search service.
+      '@languagecode': 1033
+  displayname:
+    '@default': SuperFam AI Search Indexer
+    label:
+      '@description': SuperFam AI Search Indexer
+      '@languagecode': 1033
+  introducedversion: 1.0.0.0
+  iscustomizable: 1
+  isrequired: 0
+  secretstore: 0
+  type: 100000000

@@ -1,0 +1,20 @@
+ImportExportXml:
+  '@version': 9.2.25021.162
+  '@SolutionPackageVersion': 9.2
+  '@languagecode': 1033
+  '@generatedBy': CrmLive
+  '@xmlns:xsi': http://www.w3.org/2001/XMLSchema-instance
+  SolutionManifest:
+    UniqueName: SuperFamAIPrerequisites
+    LocalizedNames:
+      LocalizedName:
+        '@description': SuperFam AI Prerequisites
+        '@languagecode': 1033
+    Descriptions:
+      Description:
+        '@description': 'Prerequisites component for SuperFam AI solution. '
+        '@languagecode': 1033
+    Version: 1.0.0.0
+    Managed: 0
+    Publisher:
+      UniqueName: developer

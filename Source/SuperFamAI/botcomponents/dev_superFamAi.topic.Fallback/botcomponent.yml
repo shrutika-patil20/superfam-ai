@@ -1,0 +1,10 @@
+botcomponent:
+  '@schemaname': dev_superFamAi.topic.Fallback
+  componenttype: 9
+  description: This system topic triggers when the user's utterance does not match any existing topics.
+  iscustomizable: 0
+  name: Fallback
+  parentbotid:
+    schemaname: dev_superFamAi
+  statecode: 0
+  statuscode: 1

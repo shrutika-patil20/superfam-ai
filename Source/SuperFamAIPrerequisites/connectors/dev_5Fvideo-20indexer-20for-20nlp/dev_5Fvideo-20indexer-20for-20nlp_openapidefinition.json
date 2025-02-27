@@ -1,0 +1,708 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Video Indexer for NLP",
+    "description": "Extract Azure AI Video Indexer’s insights into a prompt ready format that can be easily used with large language models to process natural language queries.",
+    "version": "1.0"
+  },
+  "host": "api.videoindexer.ai",
+  "basePath": "/",
+  "schemes": [
+    "https"
+  ],
+  "consumes": [],
+  "produces": [],
+  "paths": {
+    "/Auth/{location}/Accounts/{accountId}/AccessToken": {
+      "get": {
+        "responses": {
+          "default": {
+            "description": "default",
+            "schema": {}
+          }
+        },
+        "summary": "Get Account Access Token",
+        "description": "Gets an account access token. More at https://api-portal.videoindexer.ai/api-details#api=Operations&operation=Get-Account-Access-Token",
+        "operationId": "GetAccessToken",
+        "parameters": [
+          {
+            "name": "location",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Location indicates the Azure region to which the call should be routed",
+            "x-ms-summary": "Location",
+            "enum": [
+              "trial",
+              "eastus",
+              "westus2",
+              "eastasia",
+              "northeurope",
+              "westeurope",
+              "southeastasia",
+              "eastus2",
+              "australiaeast",
+              "southcentralus",
+              "japaneast",
+              "uksouth",
+              "switzerlandnorth",
+              "switzerlandwest",
+              "centralindia",
+              "canadacentral",
+              "westus",
+              "northcentralus",
+              "francecentral",
+              "centralus",
+              "koreacentral",
+              "brazilsouth",
+              "japanwest",
+              "westcentralus"
+            ]
+          },
+          {
+            "name": "accountId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Account ID is a globally unique identifier (GUID) for the account.",
+            "x-ms-summary": "Account ID"
+          },
+          {
+            "name": "allowEdit",
+            "in": "query",
+            "required": false,
+            "type": "boolean",
+            "default": false,
+            "description": "Determines the token's permission. 'false' is the equivalent of a Reader permission (read-only) and 'true' is the equivalent of a Contributor permission (read-write).",
+            "x-ms-summary": "Allow Edit"
+          }
+        ]
+      }
+    },
+    "/{location}/Accounts/{accountId}/Videos": {
+      "get": {
+        "responses": {
+          "default": {
+            "description": "default",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "results": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "accountId": {
+                        "type": "string",
+                        "description": "accountId"
+                      },
+                      "id": {
+                        "type": "string",
+                        "description": "id"
+                      },
+                      "partition": {
+                        "type": "string",
+                        "description": "partition"
+                      },
+                      "externalId": {
+                        "type": "string",
+                        "description": "externalId"
+                      },
+                      "metadata": {
+                        "type": "string",
+                        "description": "metadata"
+                      },
+                      "name": {
+                        "type": "string",
+                        "description": "name"
+                      },
+                      "description": {
+                        "type": "string",
+                        "description": "description"
+                      },
+                      "created": {
+                        "type": "string",
+                        "description": "created"
+                      },
+                      "lastModified": {
+                        "type": "string",
+                        "description": "lastModified"
+                      },
+                      "lastIndexed": {
+                        "type": "string",
+                        "description": "lastIndexed"
+                      },
+                      "privacyMode": {
+                        "type": "string",
+                        "description": "privacyMode"
+                      },
+                      "userName": {
+                        "type": "string",
+                        "description": "userName"
+                      },
+                      "isOwned": {
+                        "type": "boolean",
+                        "description": "isOwned"
+                      },
+                      "isBase": {
+                        "type": "boolean",
+                        "description": "isBase"
+                      },
+                      "hasSourceVideoFile": {
+                        "type": "boolean",
+                        "description": "hasSourceVideoFile"
+                      },
+                      "state": {
+                        "type": "string",
+                        "description": "state"
+                      },
+                      "moderationState": {
+                        "type": "string",
+                        "description": "moderationState"
+                      },
+                      "reviewState": {
+                        "type": "string",
+                        "description": "reviewState"
+                      },
+                      "isSearchable": {
+                        "type": "boolean",
+                        "description": "isSearchable"
+                      },
+                      "processingProgress": {
+                        "type": "string",
+                        "description": "processingProgress"
+                      },
+                      "durationInSeconds": {
+                        "type": "integer",
+                        "format": "int32",
+                        "description": "durationInSeconds"
+                      },
+                      "thumbnailVideoId": {
+                        "type": "string",
+                        "description": "thumbnailVideoId"
+                      },
+                      "thumbnailId": {
+                        "type": "string",
+                        "description": "thumbnailId"
+                      },
+                      "searchMatches": {
+                        "type": "array",
+                        "items": {},
+                        "description": "searchMatches"
+                      },
+                      "indexingPreset": {
+                        "type": "string",
+                        "description": "indexingPreset"
+                      },
+                      "streamingPreset": {
+                        "type": "string",
+                        "description": "streamingPreset"
+                      },
+                      "sourceLanguage": {
+                        "type": "string",
+                        "description": "sourceLanguage"
+                      },
+                      "sourceLanguages": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "description": "sourceLanguages"
+                      },
+                      "personModelId": {
+                        "type": "string",
+                        "description": "personModelId"
+                      }
+                    }
+                  },
+                  "description": "results"
+                },
+                "nextPage": {
+                  "type": "object",
+                  "properties": {
+                    "pageSize": {
+                      "type": "integer",
+                      "format": "int32",
+                      "description": "pageSize"
+                    },
+                    "skip": {
+                      "type": "integer",
+                      "format": "int32",
+                      "description": "skip"
+                    },
+                    "done": {
+                      "type": "boolean",
+                      "description": "done"
+                    },
+                    "totalCount": {
+                      "type": "integer",
+                      "format": "int32",
+                      "description": "totalCount"
+                    }
+                  },
+                  "description": "nextPage"
+                }
+              }
+            }
+          }
+        },
+        "summary": "List Videos",
+        "operationId": "ListVideos",
+        "description": "Get a list of videos in the account. More at https://api-portal.videoindexer.ai/api-details#api=Operations&operation=List-Videos",
+        "parameters": [
+          {
+            "name": "location",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Location indicates the Azure region to which the call should be routed",
+            "x-ms-summary": "Location",
+            "enum": [
+              "trial",
+              "eastus",
+              "westus2",
+              "eastasia",
+              "northeurope",
+              "westeurope",
+              "southeastasia",
+              "eastus2",
+              "australiaeast",
+              "southcentralus",
+              "japaneast",
+              "uksouth",
+              "switzerlandnorth",
+              "switzerlandwest",
+              "centralindia",
+              "canadacentral",
+              "westus",
+              "northcentralus",
+              "francecentral",
+              "centralus",
+              "koreacentral",
+              "brazilsouth",
+              "japanwest",
+              "westcentralus"
+            ]
+          },
+          {
+            "name": "accountId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Account ID is a globally unique identifier (GUID) for the account.",
+            "x-ms-summary": "Account ID"
+          },
+          {
+            "name": "createdAfter",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "description": "Filter items created before the specified date. Accepted format: RFC 3339, section 5.6. Example: '2017-07-21T17:32:28Z'",
+            "x-ms-summary": "Created After",
+            "format": "date-time"
+          },
+          {
+            "name": "createdBefore",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-ms-summary": "Created Before",
+            "description": "Filter items created after the specified date. Accepted format: RFC 3339, section 5.6. Example: '2017-07-21T17:32:28Z'",
+            "format": "date-time"
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "description": "Number of items to return.",
+            "x-ms-summary": "Page Size",
+            "format": "int32"
+          },
+          {
+            "name": "skip",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "description": "The number of records to skip.",
+            "x-ms-summary": "Skip",
+            "format": "int32"
+          },
+          {
+            "name": "accessToken",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": "Authorization header as Bearer token. Access token scope should be Video and permission should be Contributor.",
+            "x-ms-summary": "Access Token"
+          }
+        ]
+      }
+    },
+    "/{location}/Accounts/{accountId}/Videos/{videoId}/PromptContent": {
+      "get": {
+        "responses": {
+          "default": {
+            "description": "default",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "partition": {
+                  "type": "string",
+                  "description": "partition"
+                },
+                "name": {
+                  "type": "string",
+                  "description": "name"
+                },
+                "sections": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "integer",
+                        "format": "int32",
+                        "description": "id"
+                      },
+                      "start": {
+                        "type": "string",
+                        "description": "start"
+                      },
+                      "end": {
+                        "type": "string",
+                        "description": "end"
+                      },
+                      "content": {
+                        "type": "string",
+                        "description": "content"
+                      }
+                    }
+                  },
+                  "description": "sections"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Get Prompt Content",
+        "parameters": [
+          {
+            "name": "location",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Location indicates the Azure region to which the call should be routed",
+            "x-ms-summary": "Location",
+            "enum": [
+              "trial",
+              "eastus",
+              "westus2",
+              "eastasia",
+              "northeurope",
+              "westeurope",
+              "southeastasia",
+              "eastus2",
+              "australiaeast",
+              "southcentralus",
+              "japaneast",
+              "uksouth",
+              "switzerlandnorth",
+              "switzerlandwest",
+              "centralindia",
+              "canadacentral",
+              "westus",
+              "northcentralus",
+              "francecentral",
+              "centralus",
+              "koreacentral",
+              "brazilsouth",
+              "japanwest",
+              "westcentralus"
+            ]
+          },
+          {
+            "name": "accountId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Account ID is a globally unique identifier (GUID) for the account.",
+            "x-ms-summary": "Account ID"
+          },
+          {
+            "name": "videoId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The video id",
+            "x-ms-summary": "Video Id"
+          },
+          {
+            "name": "accessToken",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": "Authorization header as Bearer token. Access token scope should be Video and permission should be Contributor.",
+            "x-ms-summary": "Access Token"
+          }
+        ],
+        "description": "Get Prompt Content. More at https://api-portal.videoindexer.ai/api-details#api=Operations&operation=Get-Prompt-Content",
+        "operationId": "GetPromptContent"
+      },
+      "post": {
+        "responses": {
+          "default": {
+            "description": "default",
+            "schema": {}
+          }
+        },
+        "parameters": [
+          {
+            "name": "location",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Location indicates the Azure region to which the call should be routed",
+            "x-ms-summary": "Location",
+            "enum": [
+              "trial",
+              "eastus",
+              "westus2",
+              "eastasia",
+              "northeurope",
+              "westeurope",
+              "southeastasia",
+              "eastus2",
+              "australiaeast",
+              "southcentralus",
+              "japaneast",
+              "uksouth",
+              "switzerlandnorth",
+              "switzerlandwest",
+              "centralindia",
+              "canadacentral",
+              "westus",
+              "northcentralus",
+              "francecentral",
+              "centralus",
+              "koreacentral",
+              "brazilsouth",
+              "japanwest",
+              "westcentralus"
+            ]
+          },
+          {
+            "name": "accountId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Account ID is a globally unique identifier (GUID) for the account.",
+            "x-ms-summary": "Account ID"
+          },
+          {
+            "name": "videoId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The video id",
+            "x-ms-summary": "Video Id"
+          },
+          {
+            "name": "modelName",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "description": "The LLM tokenizer to create the prompt content.",
+            "x-ms-summary": "Model Name",
+            "enum": [
+              "Llama2",
+              "Phi2",
+              "Phi3",
+              "Phi3_5",
+              "GPT3_5Turbo",
+              "GPT4",
+              "GPT4O",
+              "GPT4OMini"
+            ]
+          },
+          {
+            "name": "promptStyle",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "description": "Define the style of the prompt.",
+            "x-ms-summary": "Prompt Style",
+            "enum": [
+              "Full",
+              "Summarized"
+            ]
+          },
+          {
+            "name": "accessToken",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": "Authorization header as Bearer token. Access token scope should be Video and permission should be Contributor.",
+            "x-ms-summary": "Access Token"
+          }
+        ],
+        "summary": "Create Prompt Content",
+        "description": "Generate Prompt Content from video insights. More at https://api-portal.videoindexer.ai/api-details#api=Operations&operation=Create-Prompt-Content",
+        "operationId": "CreatePromptContent"
+      }
+    },
+    "/Auth/{location}/Accounts/{accountId}/Videos/{videoId}/AccessToken": {
+      "get": {
+        "responses": {
+          "default": {
+            "description": "default",
+            "schema": {}
+          }
+        },
+        "operationId": "GetVideoAccessToken",
+        "summary": "Get Video Access Token",
+        "description": "Gets a video access token. More at https://api-portal.videoindexer.ai/api-details#api=Operations&operation=Get-Video-Access-Token",
+        "parameters": [
+          {
+            "name": "location",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Location indicates the Azure region to which the call should be routed",
+            "x-ms-summary": "Location",
+            "enum": [
+              "trial",
+              "eastus",
+              "westus2",
+              "eastasia",
+              "northeurope",
+              "westeurope",
+              "southeastasia",
+              "eastus2",
+              "australiaeast",
+              "southcentralus",
+              "japaneast",
+              "uksouth",
+              "switzerlandnorth",
+              "switzerlandwest",
+              "centralindia",
+              "canadacentral",
+              "westus",
+              "northcentralus",
+              "francecentral",
+              "centralus",
+              "koreacentral",
+              "brazilsouth",
+              "japanwest",
+              "westcentralus"
+            ]
+          },
+          {
+            "name": "accountId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Account ID is a globally unique identifier (GUID) for the account.",
+            "x-ms-summary": "Account ID"
+          },
+          {
+            "name": "videoId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The video id.",
+            "x-ms-summary": "Video ID"
+          },
+          {
+            "name": "allowEdit",
+            "in": "query",
+            "required": false,
+            "type": "boolean",
+            "default": false,
+            "description": "Determines the token's permission. 'false' is the equivalent of a Reader permission (read-only) and 'true' is the equivalent of a Contributor permission (read-write).",
+            "x-ms-summary": "Allow Edit"
+          }
+        ]
+      }
+    },
+    "/{location}/Accounts/{accountId}/Videos/{videoId}/PlayerWidget": {
+      "get": {
+        "responses": {
+          "default": {
+            "description": "default",
+            "schema": {}
+          }
+        },
+        "summary": "Get Video Player Widget",
+        "operationId": "GetVideoPlayerWidget",
+        "description": "Get Video Player Widget. More at https://api-portal.videoindexer.ai/api-details#api=Operations&operation=Get-Video-Player-Widget",
+        "parameters": [
+          {
+            "name": "location",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Location indicates the Azure region to which the call should be routed",
+            "x-ms-summary": "Location",
+            "enum": [
+              "trial",
+              "eastus",
+              "westus2",
+              "eastasia",
+              "northeurope",
+              "westeurope",
+              "southeastasia",
+              "eastus2",
+              "australiaeast",
+              "southcentralus",
+              "japaneast",
+              "uksouth",
+              "switzerlandnorth",
+              "switzerlandwest",
+              "centralindia",
+              "canadacentral",
+              "westus",
+              "northcentralus",
+              "francecentral",
+              "centralus",
+              "koreacentral",
+              "brazilsouth",
+              "japanwest",
+              "westcentralus"
+            ]
+          },
+          {
+            "name": "accountId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Account ID is a globally unique identifier (GUID) for the account.",
+            "x-ms-summary": "Account ID"
+          },
+          {
+            "name": "videoId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The video id.",
+            "x-ms-summary": "Video ID"
+          },
+          {
+            "name": "accessToken",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": "Authorization header as Bearer token. Access token scope should be Video and permission should be Contributor.",
+            "x-ms-summary": "Access Token"
+          }
+        ]
+      }
+    }
+  },
+  "definitions": {},
+  "parameters": {},
+  "responses": {},
+  "securityDefinitions": {},
+  "security": [],
+  "tags": []
+}

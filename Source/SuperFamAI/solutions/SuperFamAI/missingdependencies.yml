@@ -1,0 +1,79 @@
+MissingDependencies:
+  MissingDependency:
+  - Required:
+      '@type': 372
+      '@schemaName': dev_5Fazure-20ai-20search-20indexer
+      '@displayName': Azure AI Search Indexer
+      '@solution': Active
+      '@id': '{63826b1e-c104-4c31-b381-dc2136ea5751}'
+    Dependent:
+      '@type': 29
+      '@displayName': SuperFam - Prepare Video DB
+      '@id': '{5680fc8e-23f1-ef11-be20-000d3a0adb79}'
+  - Required:
+      '@type': 372
+      '@schemaName': dev_5Fazure-20ai-20search-20indexer
+      '@displayName': Azure AI Search Indexer
+      '@solution': Active
+      '@id': '{63826b1e-c104-4c31-b381-dc2136ea5751}'
+    Dependent:
+      '@type': connectionreference
+      '@displayName': dev_SuperFamAzureAISearchIndexer
+      '@id.connectionreferencelogicalname': dev_SuperFamAzureAISearchIndexer
+  - Required:
+      '@type': 372
+      '@schemaName': dev_5Fvideo-20indexer-20for-20nlp
+      '@displayName': Video Indexer for NLP
+      '@solution': Active
+      '@id': '{f0013553-0fbb-4208-a9b9-01638f66f964}'
+    Dependent:
+      '@type': 29
+      '@displayName': SuperFam - Prepare Video DB
+      '@id': '{5680fc8e-23f1-ef11-be20-000d3a0adb79}'
+  - Required:
+      '@type': 372
+      '@schemaName': dev_5Fvideo-20indexer-20for-20nlp
+      '@displayName': Video Indexer for NLP
+      '@solution': Active
+      '@id': '{f0013553-0fbb-4208-a9b9-01638f66f964}'
+    Dependent:
+      '@type': 29
+      '@displayName': SuperFam - Extract Source Videos
+      '@id': '{68204ff2-e4f1-ef11-be20-000d3a0adb79}'
+  - Required:
+      '@type': 372
+      '@schemaName': dev_5Fvideo-20indexer-20for-20nlp
+      '@displayName': Video Indexer for NLP
+      '@solution': Active
+      '@id': '{f0013553-0fbb-4208-a9b9-01638f66f964}'
+    Dependent:
+      '@type': connectionreference
+      '@displayName': dev_SuperFamVideoIndexerforNLPCR
+      '@id.connectionreferencelogicalname': dev_SuperFamVideoIndexerforNLPCR
+  - Required:
+      '@type': EnvironmentVariableDefinition
+      '@displayName': dev_SuperFamAISearchIndexer
+      '@solution': Active
+      '@id.schemaname': dev_SuperFamAISearchIndexer
+    Dependent:
+      '@type': 29
+      '@displayName': SuperFam - Prepare Video DB
+      '@id': '{5680fc8e-23f1-ef11-be20-000d3a0adb79}'
+  - Required:
+      '@type': EnvironmentVariableDefinition
+      '@displayName': dev_SuperFamVILocation
+      '@solution': Active
+      '@id.schemaname': dev_SuperFamVILocation
+    Dependent:
+      '@type': 29
+      '@displayName': SuperFam - Prepare Video DB
+      '@id': '{5680fc8e-23f1-ef11-be20-000d3a0adb79}'
+  - Required:
+      '@type': EnvironmentVariableDefinition
+      '@displayName': dev_SuperFamVILocation
+      '@solution': Active
+      '@id.schemaname': dev_SuperFamVILocation
+    Dependent:
+      '@type': 29
+      '@displayName': SuperFam - Extract Source Videos
+      '@id': '{68204ff2-e4f1-ef11-be20-000d3a0adb79}'

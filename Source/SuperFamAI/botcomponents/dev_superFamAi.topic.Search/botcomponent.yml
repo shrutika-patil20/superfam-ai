@@ -1,0 +1,10 @@
+botcomponent:
+  '@schemaname': dev_superFamAi.topic.Search
+  componenttype: 9
+  description: Create generative answers from knowledge sources.
+  iscustomizable: 0
+  name: Conversational boosting
+  parentbotid:
+    schemaname: dev_superFamAi
+  statecode: 1
+  statuscode: 2

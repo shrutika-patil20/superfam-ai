@@ -1,0 +1,9 @@
+connectionreference:
+  '@connectionreferencelogicalname': dev_sharedazureblob_da351
+  connectionreferencedisplayname: SuperFam - Azure Blob Storage
+  connectorid: /providers/Microsoft.PowerApps/apis/shared_azureblob
+  description: Connection Reference for Azure Blob Storage.
+  iscustomizable: 1
+  promptingbehavior: 0
+  statecode: 0
+  statuscode: 1

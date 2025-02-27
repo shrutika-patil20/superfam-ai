@@ -1,0 +1,10 @@
+botcomponent:
+  '@schemaname': dev_superFamAi.topic.ConversationStart
+  componenttype: 9
+  description: This system topic triggers when the copilot receives an Activity indicating the beginning of a new conversation. If you do not want the copilot to initiate the conversation, disable this topic.
+  iscustomizable: 0
+  name: Conversation Start
+  parentbotid:
+    schemaname: dev_superFamAi
+  statecode: 0
+  statuscode: 1

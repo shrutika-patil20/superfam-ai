@@ -1,0 +1,401 @@
+{
+  "properties": {
+    "connectionReferences": {
+      "shared_dev-5fvideo-20indexer-20for-20nlp-5f288c598e05251a12": {
+        "runtimeSource": "embedded",
+        "connection": {
+          "connectionReferenceLogicalName": "dev_SuperFamVideoIndexerforNLPCR"
+        },
+        "api": {
+          "name": "shared_dev-5fvideo-20indexer-20for-20nlp-5f288c598e05251a12",
+          "logicalName": "dev_5Fvideo-20indexer-20for-20nlp"
+        }
+      },
+      "shared_commondataserviceforapps": {
+        "impersonation": {},
+        "runtimeSource": "embedded",
+        "connection": {
+          "connectionReferenceLogicalName": "dev_sharedcommondataserviceforapps_c7381"
+        },
+        "api": {
+          "name": "shared_commondataserviceforapps"
+        }
+      }
+    },
+    "definition": {
+      "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+      "contentVersion": "1.0.0.0",
+      "parameters": {
+        "$authentication": {
+          "defaultValue": {},
+          "type": "SecureObject"
+        },
+        "$connections": {
+          "defaultValue": {},
+          "type": "Object"
+        },
+        "SuperFam VI Location (dev_SuperFamVILocation)": {
+          "defaultValue": "trial",
+          "type": "String",
+          "metadata": {
+            "schemaName": "dev_SuperFamVILocation",
+            "description": "The location of video indexer service."
+          }
+        }
+      },
+      "triggers": {
+        "manual": {
+          "metadata": {
+            "operationMetadataId": "b8f61c18-7224-4f8a-9c5f-72fbce5df764"
+          },
+          "type": "Request",
+          "kind": "Skills",
+          "inputs": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "text": {
+                  "description": "Provide generated citation from generative answer action.",
+                  "title": "Citation",
+                  "type": "string",
+                  "x-ms-content-hint": "TEXT",
+                  "x-ms-dynamically-added": true
+                }
+              },
+              "required": [
+                "text"
+              ]
+            }
+          },
+          "description": "This flow is used to extract the relevant source videos collection that would be used in copilot agent to reformat the citation markup."
+        }
+      },
+      "actions": {
+        "Respond_to_Copilot": {
+          "runAfter": {
+            "For_each": [
+              "Succeeded",
+              "Failed",
+              "TimedOut",
+              "Skipped"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "81c94f73-dd52-465c-ad3b-a4686da63cc3"
+          },
+          "type": "Response",
+          "kind": "Skills",
+          "inputs": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "videosources": {
+                  "title": "VideoSources",
+                  "x-ms-dynamically-added": true,
+                  "type": "string",
+                  "description": "Extracted Source Videos in JSON format."
+                }
+              },
+              "additionalProperties": {}
+            },
+            "statusCode": 200,
+            "body": {
+              "videosources": "@{variables('varSourceVideos')}"
+            }
+          },
+          "description": "Sending back the generated video source collection. This action will always return a response, regardless of flow execution status, to prevent front-end disruptions."
+        },
+        "Parse_Citation_to_JSON": {
+          "runAfter": {
+            "Initialize_varSourceVideos": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "72334224-dbc7-4c3b-a663-26ad42ee058f"
+          },
+          "type": "ParseJson",
+          "inputs": {
+            "content": "@triggerBody()?['text']",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "Id": {
+                    "type": "string"
+                  },
+                  "Name": {
+                    "type": "string"
+                  },
+                  "Text": {
+                    "type": "string"
+                  },
+                  "url": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "Id",
+                  "Name",
+                  "Text"
+                ]
+              }
+            }
+          },
+          "description": "Converting the citation to JSON format."
+        },
+        "Initialize_varSourceVideos": {
+          "runAfter": {},
+          "metadata": {
+            "operationMetadataId": "f7466c32-43c1-4b83-9544-17a73790e0a4"
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "varSourceVideos",
+                "type": "array"
+              }
+            ]
+          },
+          "description": "Initializing \"varSourceVideos\" variable of array type which will hold the source videos."
+        },
+        "For_each": {
+          "foreach": "@outputs('Parse_Citation_to_JSON')['body']",
+          "actions": {
+            "videoName": {
+              "metadata": {
+                "operationMetadataId": "c2116ad2-1db2-4780-a9c0-e1397f4c558c"
+              },
+              "type": "Compose",
+              "inputs": "@trim(replace(replace(replace(replace(first(split(first(split(last(split(item()?['Text'], '[Video title]')), '\\n')), ',')), '\\', ''),'}',''), '{',''), ':',''))",
+              "description": "The video name is not directly returned in the citation; instead, it is available in the Text property.",
+              "runtimeConfiguration": {
+                "secureData": {
+                  "properties": [
+                    "inputs"
+                  ]
+                }
+              }
+            },
+            "videoId": {
+              "metadata": {
+                "operationMetadataId": "6d3cc5df-3c5a-430e-9d87-e59c51957759"
+              },
+              "type": "Compose",
+              "inputs": "@trim(replace(replace(replace(replace(first(split(first(split(last(split(item()?['Text'], '[Video Id]')), '\\n')), ',')), '\\', ''),'}',''), '{',''), ':',''))",
+              "description": "The video id is not directly returned in the citation; instead, it is available in the Text property.",
+              "runtimeConfiguration": {
+                "secureData": {
+                  "properties": [
+                    "inputs"
+                  ]
+                }
+              }
+            },
+            "start": {
+              "runAfter": {
+                "timeValue": [
+                  "Succeeded"
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "ec301cc6-ddf8-46e6-918d-43fd0a1c5768"
+              },
+              "type": "Compose",
+              "inputs": "@add(add(mul(3600, int(first(split(outputs('timeValue'), ':')))), \r\n    mul(60, int(split(outputs('timeValue'), ':')[1]))), \r\n    int(last(split(outputs('timeValue'), ':'))))",
+              "description": "Converting the time value to seconds.",
+              "runtimeConfiguration": {
+                "secureData": {
+                  "properties": [
+                    "inputs"
+                  ]
+                }
+              }
+            },
+            "Get_Video_Access_Token": {
+              "runAfter": {
+                "videoId": [
+                  "Succeeded"
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "a4f95c4e-c85e-41ab-9277-5200d1aaa420"
+              },
+              "type": "OpenApiConnection",
+              "inputs": {
+                "parameters": {
+                  "location": "@parameters('SuperFam VI Location (dev_SuperFamVILocation)')",
+                  "accountId": "@outputs('Get_VI_Account_ID')?['body/EnvironmentVariableSecretValue']",
+                  "videoId": "@outputs('videoId')",
+                  "allowEdit": false
+                },
+                "host": {
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_dev-5fvideo-20indexer-20for-20nlp-5f288c598e05251a12",
+                  "operationId": "GetVideoAccessToken",
+                  "connectionName": "shared_dev-5fvideo-20indexer-20for-20nlp-5f288c598e05251a12"
+                },
+                "retryPolicy": {
+                  "type": "none"
+                }
+              },
+              "description": "Generating the video access token. The allowEdit is set to false for read only permission.",
+              "runtimeConfiguration": {
+                "secureData": {
+                  "properties": [
+                    "inputs",
+                    "outputs"
+                  ]
+                }
+              }
+            },
+            "url": {
+              "runAfter": {
+                "start-exception": [
+                  "Succeeded"
+                ],
+                "url-exception": [
+                  "Succeeded"
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "d33adea2-d1dd-4129-91fc-dde800fcdb35"
+              },
+              "type": "Compose",
+              "inputs": "@concat('https://www.videoindexer.ai/embed/player/', outputs('Get_VI_Account_ID')?['body/EnvironmentVariableSecretValue'], '/', outputs('videoId'), '?t=',outputs('start-exception'),'&location=trial&accessToken=', outputs('url-exception'))",
+              "description": "Generating the Video Indexer video URL. This URL will be accessible for only 1 hour, depending on the validity of the provided access token.",
+              "runtimeConfiguration": {
+                "secureData": {
+                  "properties": [
+                    "inputs"
+                  ]
+                }
+              }
+            },
+            "Append_to_varSourceVideos": {
+              "runAfter": {
+                "url": [
+                  "Succeeded"
+                ],
+                "videoName": [
+                  "Succeeded"
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "2122a078-4591-4de0-9976-e22c7a534a70"
+              },
+              "type": "AppendToArrayVariable",
+              "inputs": {
+                "name": "varSourceVideos",
+                "value": {
+                  "CitationId": "@{item()?['Id']}",
+                  "videoName": "@{outputs('videoName')}",
+                  "VideoUrl": "@{outputs('url')}"
+                }
+              },
+              "description": "Appending the source video information in varSourceVideos array."
+            },
+            "timeValue": {
+              "metadata": {
+                "operationMetadataId": "1eabc6c7-19be-4023-aadf-4343c37f3bfe"
+              },
+              "type": "Compose",
+              "inputs": "@trim(replace(first(split(first(split(last(split(replace(item()?['Text'], '\\', ''), ',start:')), ',')), '.')), '\\', ''))",
+              "description": "Extracting the start time value. The start value is not directly returned in the citation; instead, it is available in the Text property.",
+              "runtimeConfiguration": {
+                "secureData": {
+                  "properties": [
+                    "inputs"
+                  ]
+                }
+              }
+            },
+            "start-exception": {
+              "runAfter": {
+                "start": [
+                  "Succeeded",
+                  "Failed"
+                ]
+              },
+              "type": "Compose",
+              "inputs": "@If(equals(outputs('start'), null), 0, outputs('start'))",
+              "description": "Handling if any error in while extracting start time.",
+              "runtimeConfiguration": {
+                "secureData": {
+                  "properties": [
+                    "inputs"
+                  ]
+                }
+              }
+            },
+            "url-exception": {
+              "runAfter": {
+                "Get_Video_Access_Token": [
+                  "Succeeded",
+                  "Failed"
+                ]
+              },
+              "type": "Compose",
+              "inputs": "@If(contains(body('Get_Video_Access_Token'), 'ErrorType'), 'INVALIDTOKEN', body('Get_Video_Access_Token'))",
+              "description": "Handling if any error in while extracting url.",
+              "runtimeConfiguration": {
+                "secureData": {
+                  "properties": [
+                    "inputs"
+                  ]
+                }
+              }
+            }
+          },
+          "runAfter": {
+            "Get_VI_Account_ID": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "dfd34403-f839-4caf-bfe7-51af390ff4f0"
+          },
+          "type": "Foreach"
+        },
+        "Get_VI_Account_ID": {
+          "runAfter": {
+            "Parse_Citation_to_JSON": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "8481acc3-776a-40b9-aae3-4e800c4ae997"
+          },
+          "type": "OpenApiConnection",
+          "inputs": {
+            "parameters": {
+              "actionName": "RetrieveEnvironmentVariableSecretValue",
+              "item/EnvironmentVariableName": "dev_SuperFamVIAccountId"
+            },
+            "host": {
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps",
+              "operationId": "PerformUnboundAction",
+              "connectionName": "shared_commondataserviceforapps"
+            },
+            "retryPolicy": {
+              "type": "none"
+            }
+          },
+          "description": "The Video Indexer account ID is securely stored as an environment variable. Retrieving its secret value from the environment.",
+          "runtimeConfiguration": {
+            "secureData": {
+              "properties": [
+                "inputs",
+                "outputs"
+              ]
+            }
+          }
+        }
+      },
+      "outputs": {}
+    },
+    "templateName": "8966f0978a80430098d992ce322095e3"
+  },
+  "schemaVersion": "1.0.0.0"
+}

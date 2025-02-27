@@ -1,0 +1,11 @@
+SolutionComponents:
+  Component:
+  - '@path': /connectors/dev_5Fazure-20ai-20search-20indexer
+  - '@path': /connectors/dev_5Fvideo-20indexer-20for-20nlp
+  - '@path': /environmentvariabledefinitions/dev_SuperFamAISearchIndexer
+  - '@path': /environmentvariabledefinitions/dev_SuperFamAISearchServiceName
+  - '@path': /environmentvariabledefinitions/dev_SuperFamAISearchServiceSecret
+  - '@path': /environmentvariabledefinitions/dev_SuperFamVIAccountId
+  - '@path': /environmentvariabledefinitions/dev_SuperFamVILocation
+  - '@path': /environmentvariabledefinitions/dev_SuperFamVISecretKey
+  - '@path': /publishers/developer

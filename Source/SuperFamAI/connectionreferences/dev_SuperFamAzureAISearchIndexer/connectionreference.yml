@@ -1,0 +1,11 @@
+connectionreference:
+  '@connectionreferencelogicalname': dev_SuperFamAzureAISearchIndexer
+  connectionreferencedisplayname: SuperFam - Azure AI Search Indexer
+  connectorid: /providers/Microsoft.PowerApps/apis/shared_dev-5fazure-20ai-20search-20indexer-5f288c598e05251a12
+  customconnectorid:
+    connectorid: 63826b1e-c104-4c31-b381-dc2136ea5751
+  description: Connection Reference for Azure AI search Indexer.
+  iscustomizable: 1
+  promptingbehavior: 0
+  statecode: 0
+  statuscode: 1

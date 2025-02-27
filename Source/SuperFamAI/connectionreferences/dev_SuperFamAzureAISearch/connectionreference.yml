@@ -1,0 +1,8 @@
+connectionreference:
+  '@connectionreferencelogicalname': dev_SuperFamAzureAISearch
+  connectionreferencedisplayname: SuperFam - Azure AI Search
+  connectorid: /providers/Microsoft.PowerApps/apis/shared_azureaisearch
+  iscustomizable: 1
+  promptingbehavior: 0
+  statecode: 0
+  statuscode: 1

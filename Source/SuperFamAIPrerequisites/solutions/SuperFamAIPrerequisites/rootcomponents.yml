@@ -1,0 +1,10 @@
+RootComponents:
+  RootComponent:
+  - '@type': 372
+    '@id': '{63826b1e-c104-4c31-b381-dc2136ea5751}'
+    '@schemaName': dev_5Fazure-20ai-20search-20indexer
+    '@behavior': 0
+  - '@type': 372
+    '@id': '{f0013553-0fbb-4208-a9b9-01638f66f964}'
+    '@schemaName': dev_5Fvideo-20indexer-20for-20nlp
+    '@behavior': 0

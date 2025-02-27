@@ -1,0 +1,32 @@
+Workflow:
+  '@WorkflowId': '{68204ff2-e4f1-ef11-be20-000d3a0adb79}'
+  '@Name': SuperFam - Extract Source Videos
+  '@Description': This flow is used to extract the relevant source videos information that would be used in copilot agent to reformat the citation markup.
+  JsonFileName: /modernflows/68204ff2-e4f1-ef11-be20-000d3a0adb79/SuperFam-ExtractSourceVideos-68204FF2-E4F1-EF11-BE20-000D3A0ADB79.json
+  Type: 1
+  Subprocess: 0
+  Category: 5
+  Mode: 0
+  Scope: 4
+  OnDemand: 0
+  TriggerOnCreate: 0
+  TriggerOnDelete: 0
+  AsyncAutodelete: 0
+  SyncWorkflowLogOnFailure: 0
+  StateCode: 1
+  StatusCode: 2
+  RunAs: 1
+  IsTransacted: 1
+  IntroducedVersion: 1.0.0.0
+  IsCustomizable: 1
+  BusinessProcessType: 0
+  IsCustomProcessingStepAllowedForOtherPublishers: 1
+  PrimaryEntity: none
+  LocalizedNames:
+    LocalizedName:
+      '@languagecode': 1033
+      '@description': SuperFam - Extract Source Videos
+  Descriptions:
+    Description:
+      '@languagecode': 1033
+      '@description': This flow is used to extract the relevant source videos information that would be used in copilot agent to reformat the citation markup.

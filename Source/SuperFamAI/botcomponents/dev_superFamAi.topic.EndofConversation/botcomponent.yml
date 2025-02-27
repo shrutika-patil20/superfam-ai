@@ -1,0 +1,13 @@
+botcomponent:
+  '@schemaname': dev_superFamAi.topic.EndofConversation
+  componenttype: 9
+  description: >-
+    This system topic is only triggered by a redirect action,
+
+    and guides the user through rating their conversation with the copilot.
+  iscustomizable: 0
+  name: End of Conversation
+  parentbotid:
+    schemaname: dev_superFamAi
+  statecode: 0
+  statuscode: 1

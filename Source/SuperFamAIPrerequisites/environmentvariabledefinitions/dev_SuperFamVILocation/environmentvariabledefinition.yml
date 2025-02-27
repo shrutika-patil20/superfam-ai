@@ -1,0 +1,18 @@
+environmentvariabledefinition:
+  '@schemaname': dev_SuperFamVILocation
+  defaultvalue: trial
+  description:
+    '@default': The location of video indexer service.
+    label:
+      '@description': The location of video indexer service.
+      '@languagecode': 1033
+  displayname:
+    '@default': SuperFam VI Location
+    label:
+      '@description': SuperFam VI Location
+      '@languagecode': 1033
+  introducedversion: 1.0.0.0
+  iscustomizable: 1
+  isrequired: 0
+  secretstore: 0
+  type: 100000000

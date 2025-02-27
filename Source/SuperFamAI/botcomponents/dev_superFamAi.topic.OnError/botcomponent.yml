@@ -1,0 +1,10 @@
+botcomponent:
+  '@schemaname': dev_superFamAi.topic.OnError
+  componenttype: 9
+  description: This system topic triggers when the copilot encounters an error. When using the test chat pane, the full error description is displayed.
+  iscustomizable: 0
+  name: On Error
+  parentbotid:
+    schemaname: dev_superFamAi
+  statecode: 0
+  statuscode: 1

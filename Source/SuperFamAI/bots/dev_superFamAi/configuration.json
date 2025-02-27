@@ -1,0 +1,8 @@
+{
+  "$kind": "BotConfiguration",
+  "aISettings": {
+    "$kind": "AISettings",
+    "useModelKnowledge": false,
+    "isSemanticSearchEnabled": true
+  }
+}

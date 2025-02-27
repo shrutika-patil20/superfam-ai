@@ -1,0 +1,17 @@
+environmentvariabledefinition:
+  '@schemaname': dev_SuperFamAISearchServiceSecret
+  description:
+    '@default': The secret key for you azure AI search service.
+    label:
+      '@description': The secret key for you azure AI search service.
+      '@languagecode': 1033
+  displayname:
+    '@default': SuperFam AI Search Service Secret
+    label:
+      '@description': SuperFam AI Search Service Secret
+      '@languagecode': 1033
+  introducedversion: 1.0.0.0
+  iscustomizable: 1
+  isrequired: 0
+  secretstore: 0
+  type: 100000005

@@ -1,0 +1,9 @@
+connectionreference:
+  '@connectionreferencelogicalname': dev_sharedcommondataserviceforapps_c7381
+  connectionreferencedisplayname: SuperFam - Microsoft Dataverse CR
+  connectorid: /providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps
+  description: Connection Reference for Dataverse environment.
+  iscustomizable: 1
+  promptingbehavior: 0
+  statecode: 0
+  statuscode: 1

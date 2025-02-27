@@ -1,0 +1,11 @@
+Connector:
+  connectorid: 63826b1e-c104-4c31-b381-dc2136ea5751
+  description: Azure AI Search Indexer facilitates indexing operations.
+  displayname: Azure AI Search Indexer
+  iconbrandcolor: '#ffffff'
+  name: dev_5Fazure-20ai-20search-20indexer
+  connectortype: 1
+  openapidefinition: /connectors/dev_5Fazure-20ai-20search-20indexer/dev_5Fazure-20ai-20search-20indexer_openapidefinition.json
+  connectionparameters: /connectors/dev_5Fazure-20ai-20search-20indexer/dev_5Fazure-20ai-20search-20indexer_connectionparameters.json
+  policytemplateinstances: /connectors/dev_5Fazure-20ai-20search-20indexer/dev_5Fazure-20ai-20search-20indexer_policytemplateinstances.json
+  iconblob: /connectors/dev_5Fazure-20ai-20search-20indexer/dev_5Fazure-20ai-20search-20indexer_iconblob.Jpeg

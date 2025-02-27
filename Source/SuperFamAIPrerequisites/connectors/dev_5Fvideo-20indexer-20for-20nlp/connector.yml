@@ -1,0 +1,11 @@
+Connector:
+  connectorid: f0013553-0fbb-4208-a9b9-01638f66f964
+  description: Extract Azure AI Video Indexer’s insights into a prompt ready format that can be easily used with large language models to process natural language queries.
+  displayname: Video Indexer for NLP
+  iconbrandcolor: '#ffffff'
+  name: dev_5Fvideo-20indexer-20for-20nlp
+  connectortype: 1
+  openapidefinition: /connectors/dev_5Fvideo-20indexer-20for-20nlp/dev_5Fvideo-20indexer-20for-20nlp_openapidefinition.json
+  connectionparameters: /connectors/dev_5Fvideo-20indexer-20for-20nlp/dev_5Fvideo-20indexer-20for-20nlp_connectionparameters.json
+  policytemplateinstances: /connectors/dev_5Fvideo-20indexer-20for-20nlp/dev_5Fvideo-20indexer-20for-20nlp_policytemplateinstances.json
+  iconblob: /connectors/dev_5Fvideo-20indexer-20for-20nlp/dev_5Fvideo-20indexer-20for-20nlp_iconblob.Png

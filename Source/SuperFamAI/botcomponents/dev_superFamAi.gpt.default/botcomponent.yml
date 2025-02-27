@@ -1,0 +1,10 @@
+botcomponent:
+  '@schemaname': dev_superFamAi.gpt.default
+  componenttype: 15
+  description: SuperFam AI Assistant is an AI-powered Copilot designed to support busy parents by providing real-time insights, monitoring, and assistance in managing their children's well-being, education, and daily activities.
+  iscustomizable: 0
+  name: SuperFam AI
+  parentbotid:
+    schemaname: dev_superFamAi
+  statecode: 0
+  statuscode: 1

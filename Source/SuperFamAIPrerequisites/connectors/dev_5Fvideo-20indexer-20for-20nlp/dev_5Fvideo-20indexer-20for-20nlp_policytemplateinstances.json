@@ -1,0 +1,38 @@
+[
+  {
+    "templateId": "setheader",
+    "title": "Set Ocp-Apim-Subscription-Key Header",
+    "parameters": {
+      "x-ms-apimTemplateParameter.name": "Ocp-Apim-Subscription-Key",
+      "x-ms-apimTemplateParameter.value": "@environmentVariables(\"dev_SuperFamVISecretKey\")",
+      "x-ms-apimTemplateParameter.existsAction": "override",
+      "x-ms-apimTemplate-policySection": "Request",
+      "x-ms-apimTemplate-operationName": [
+        "GetAccessToken",
+        "ListVideos",
+        "GetPromptContent",
+        "CreatePromptContent",
+        "GetVideoAccessToken",
+        "GetVideoPlayerWidget"
+      ]
+    }
+  },
+  {
+    "templateId": "setheader",
+    "title": "Set Cache-Control Header",
+    "parameters": {
+      "x-ms-apimTemplateParameter.name": "Cache-Control",
+      "x-ms-apimTemplateParameter.value": "no-cache",
+      "x-ms-apimTemplateParameter.existsAction": "override",
+      "x-ms-apimTemplate-policySection": "Request",
+      "x-ms-apimTemplate-operationName": [
+        "GetAccessToken",
+        "ListVideos",
+        "GetPromptContent",
+        "CreatePromptContent",
+        "GetVideoAccessToken",
+        "GetVideoPlayerWidget"
+      ]
+    }
+  }
+]

@@ -1,0 +1,10 @@
+botcomponent:
+  '@schemaname': dev_superFamAi.topic.Goodbye
+  componenttype: 9
+  description: This topic triggers when the user says goodbye. By default, it does not end the conversation. If you would like to end the conversation when the user says goodbye, you can add an "End of Conversation" action to this topic, or redirect to the "End of Conversation" system topic.
+  iscustomizable: 0
+  name: Goodbye
+  parentbotid:
+    schemaname: dev_superFamAi
+  statecode: 0
+  statuscode: 1

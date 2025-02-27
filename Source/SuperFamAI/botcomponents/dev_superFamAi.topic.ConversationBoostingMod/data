@@ -1,0 +1,79 @@
+kind: AdaptiveDialog
+beginDialog:
+  kind: OnUnknownIntent
+  id: main
+  priority: -1
+  actions:
+    - kind: SearchAndSummarizeContent
+      id: search-content
+      latencyMessageSettings:
+        allowLatencyMessage: false
+
+      autoSend: false
+      variable: Topic.Answer
+      userInput: =System.Activity.Text
+      additionalInstructions: Do not combine result from multiple sections into one. Rather display result in bullet points along with citation next to each section.
+      responseCaptureType: FullResponse
+
+    - kind: ConditionGroup
+      id: has-answer-conditions
+      conditions:
+        - id: has-answer
+          condition: =!IsBlank(Topic.Answer)
+          actions:
+            - kind: InvokeFlowAction
+              id: invokeFlowAction_B6z72Z
+              input:
+                binding:
+                  text: =JSON(Topic.Answer.Text.CitationSources)
+
+              output:
+                binding:
+                  videosources: Topic.VideoSources
+
+              flowId: 68204ff2-e4f1-ef11-be20-000d3a0adb79
+
+            - kind: SetVariable
+              id: setVariable_tNjanF
+              variable: Topic.TableVideoSources
+              value: |-
+                =// Parsing String to Table
+                ForAll(Table(ParseJSON(Topic.VideoSources)), 
+                    { 
+                        CitationId: Text(Value(ThisRecord.Value.CitationId)), 
+                        VideoName: Text(ThisRecord.Value.VideoName),
+                        VideoUrl: Text(ThisRecord.Value.VideoUrl)
+                    }
+                )
+
+            - kind: SetVariable
+              id: setVariable_HMWbsZ
+              variable: Topic.FormattedAnswer
+              value: |-
+                =// Combine content with citations
+                Topic.Answer.Text.Content & Char(10) & Char(10) &
+                
+                // Concatenate citations in Markdown format
+                Concat(
+                    Topic.Answer.Text.CitationSources,
+                                    
+                    "[" & Id & "]: " & 
+                
+                    // Passing updated URL of resource
+                    LookUp(Topic.TableVideoSources, Id = CitationId, VideoUrl) &
+                
+                    // Display name of the Video File
+                    LookUp(Topic.TableVideoSources, Id = CitationId, VideoName),
+                    
+                                
+                    // Line breaks between citations
+                    Char(10) & Char(10)
+                )
+
+            - kind: SendActivity
+              id: sendActivity_cPFAop
+              activity: "{Topic.FormattedAnswer}"
+
+            - kind: EndDialog
+              id: end-topic
+              clearTopicQueue: true

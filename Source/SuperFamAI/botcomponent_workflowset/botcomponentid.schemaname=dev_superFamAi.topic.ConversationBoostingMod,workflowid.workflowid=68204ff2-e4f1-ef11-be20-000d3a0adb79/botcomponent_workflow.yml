@@ -1,0 +1,4 @@
+botcomponent_workflow:
+  '@botcomponentid.schemaname': dev_superFamAi.topic.ConversationBoostingMod
+  '@workflowid.workflowid': 68204ff2-e4f1-ef11-be20-000d3a0adb79
+  iscustomizable: 1

@@ -1,0 +1,9 @@
+botcomponent:
+  '@schemaname': dev_superFamAi.topic.ConversationBoostingMod
+  componenttype: 9
+  iscustomizable: 0
+  name: SuperFam - Conversation Boosting
+  parentbotid:
+    schemaname: dev_superFamAi
+  statecode: 0
+  statuscode: 1

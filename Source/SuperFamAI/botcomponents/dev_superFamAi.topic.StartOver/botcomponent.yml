@@ -1,0 +1,9 @@
+botcomponent:
+  '@schemaname': dev_superFamAi.topic.StartOver
+  componenttype: 9
+  iscustomizable: 0
+  name: Start Over
+  parentbotid:
+    schemaname: dev_superFamAi
+  statecode: 0
+  statuscode: 1

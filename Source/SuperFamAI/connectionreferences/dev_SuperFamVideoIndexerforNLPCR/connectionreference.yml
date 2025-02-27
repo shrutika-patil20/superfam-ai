@@ -1,0 +1,11 @@
+connectionreference:
+  '@connectionreferencelogicalname': dev_SuperFamVideoIndexerforNLPCR
+  connectionreferencedisplayname: SuperFam - Video Indexer for NLP
+  connectorid: /providers/Microsoft.PowerApps/apis/shared_dev-5fvideo-20indexer-20for-20nlp-5f288c598e05251a12
+  customconnectorid:
+    connectorid: f0013553-0fbb-4208-a9b9-01638f66f964
+  description: Connection Reference for video indexer for LLM
+  iscustomizable: 1
+  promptingbehavior: 0
+  statecode: 0
+  statuscode: 1

@@ -1,0 +1,10 @@
+botcomponent:
+  '@schemaname': dev_superFamAi.topic.ThankYou
+  componenttype: 9
+  description: This topic triggers when the user says thank you.
+  iscustomizable: 0
+  name: Thank you
+  parentbotid:
+    schemaname: dev_superFamAi
+  statecode: 0
+  statuscode: 1

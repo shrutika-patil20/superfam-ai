@@ -1,0 +1,14 @@
+RootComponents:
+  RootComponent:
+  - '@type': 29
+    '@id': '{5680fc8e-23f1-ef11-be20-000d3a0adb79}'
+    '@behavior': 0
+  - '@type': 29
+    '@id': '{68204ff2-e4f1-ef11-be20-000d3a0adb79}'
+    '@behavior': 0
+  - '@type': 431
+    '@schemaName': dev_superfamuser dev_photo
+    '@behavior': 0
+  - '@type': 432
+    '@schemaName': dev_superfamuser
+    '@behavior': 0

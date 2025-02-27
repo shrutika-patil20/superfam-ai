@@ -1,0 +1,10 @@
+botcomponent:
+  '@schemaname': dev_superFamAi.topic.Signin
+  componenttype: 9
+  description: This system topic triggers when the copilot needs to sign in the user or require the user to sign in
+  iscustomizable: 0
+  name: 'Sign in '
+  parentbotid:
+    schemaname: dev_superFamAi
+  statecode: 0
+  statuscode: 1

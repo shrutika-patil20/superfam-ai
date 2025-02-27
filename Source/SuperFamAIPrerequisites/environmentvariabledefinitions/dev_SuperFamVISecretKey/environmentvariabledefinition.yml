@@ -1,0 +1,17 @@
+environmentvariabledefinition:
+  '@schemaname': dev_SuperFamVISecretKey
+  description:
+    '@default': The secret key used to authenticate and access your video indexer account.
+    label:
+      '@description': The secret key used to authenticate and access your video indexer account.
+      '@languagecode': 1033
+  displayname:
+    '@default': SuperFam VI Secret Key
+    label:
+      '@description': SuperFam VI Secret Key
+      '@languagecode': 1033
+  introducedversion: 1.0.0.0
+  iscustomizable: 1
+  isrequired: 0
+  secretstore: 0
+  type: 100000005

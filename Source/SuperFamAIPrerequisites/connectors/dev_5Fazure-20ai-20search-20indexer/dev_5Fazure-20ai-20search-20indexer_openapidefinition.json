@@ -1,0 +1,77 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Azure AI Search Indexer",
+    "description": "Azure AI Search Indexer facilitates indexing operations.",
+    "version": "1.0"
+  },
+  "host": "@environmentVariables(\"dev_SuperFamAISearchServiceName\").search.windows.net",
+  "basePath": "/",
+  "schemes": [
+    "https"
+  ],
+  "consumes": [],
+  "produces": [],
+  "paths": {
+    "/indexers": {
+      "get": {
+        "responses": {
+          "default": {
+            "description": "default",
+            "schema": {}
+          }
+        },
+        "parameters": [
+          {
+            "name": "api-version",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "default": "2024-07-01",
+            "description": "The version of API. Get more details at https://learn.microsoft.com/en-us/rest/api/searchservice/search-service-api-versions#stable-versions",
+            "x-ms-summary": "API Version"
+          }
+        ],
+        "summary": "List Indexer",
+        "description": "The List Indexers operation returns the list of indexers in your Azure AI Search service. More at https://learn.microsoft.com/en-us/rest/api/searchservice/list-indexers",
+        "operationId": "ListIndexer"
+      }
+    },
+    "/indexers/{indexerName}/run": {
+      "post": {
+        "responses": {
+          "default": {
+            "description": "default",
+            "schema": {}
+          }
+        },
+        "parameters": [
+          {
+            "name": "indexerName",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "default": "2024-07-01",
+            "description": "The version of API. Get more details at https://learn.microsoft.com/en-us/rest/api/searchservice/search-service-api-versions#stable-versions",
+            "x-ms-summary": "API Version"
+          }
+        ],
+        "summary": "Run Indexer",
+        "description": "Run Indexer operation on demand. More at https://learn.microsoft.com/en-us/rest/api/searchservice/run-indexer",
+        "operationId": "RunIndexer"
+      }
+    }
+  },
+  "definitions": {},
+  "parameters": {},
+  "responses": {},
+  "securityDefinitions": {},
+  "security": [],
+  "tags": []
+}

@@ -1,0 +1,26 @@
+SolutionComponents:
+  Component:
+  - '@path': /botcomponent_workflowset/botcomponentid.schemaname=dev_superFamAi.topic.ConversationBoostingMod,workflowid.workflowid=68204ff2-e4f1-ef11-be20-000d3a0adb79
+  - '@path': /botcomponents/dev_superFamAi.gpt.default
+  - '@path': /botcomponents/dev_superFamAi.topic.ConversationBoostingMod
+  - '@path': /botcomponents/dev_superFamAi.topic.ConversationStart
+  - '@path': /botcomponents/dev_superFamAi.topic.EndofConversation
+  - '@path': /botcomponents/dev_superFamAi.topic.Escalate
+  - '@path': /botcomponents/dev_superFamAi.topic.Fallback
+  - '@path': /botcomponents/dev_superFamAi.topic.Goodbye
+  - '@path': /botcomponents/dev_superFamAi.topic.Greeting
+  - '@path': /botcomponents/dev_superFamAi.topic.MultipleTopicsMatched
+  - '@path': /botcomponents/dev_superFamAi.topic.OnError
+  - '@path': /botcomponents/dev_superFamAi.topic.ResetConversation
+  - '@path': /botcomponents/dev_superFamAi.topic.Search
+  - '@path': /botcomponents/dev_superFamAi.topic.Signin
+  - '@path': /botcomponents/dev_superFamAi.topic.StartOver
+  - '@path': /botcomponents/dev_superFamAi.topic.ThankYou
+  - '@path': /bots/dev_superFamAi
+  - '@path': /connectionreferences/dev_SuperFamAzureAISearchIndexer
+  - '@path': /connectionreferences/dev_SuperFamVideoIndexerforNLPCR
+  - '@path': /connectionreferences/dev_sharedazureblob_da351
+  - '@path': /connectionreferences/dev_sharedcommondataserviceforapps_c7381
+  - '@path': /modernflows/5680fc8e-23f1-ef11-be20-000d3a0adb79
+  - '@path': /modernflows/68204ff2-e4f1-ef11-be20-000d3a0adb79
+  - '@path': /publishers/developer

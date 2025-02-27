@@ -1,0 +1,10 @@
+botcomponent:
+  '@schemaname': dev_superFamAi.topic.Greeting
+  componenttype: 9
+  description: This topic is triggered when the user greets the copilot.
+  iscustomizable: 0
+  name: Greeting
+  parentbotid:
+    schemaname: dev_superFamAi
+  statecode: 0
+  statuscode: 1

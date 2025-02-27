@@ -52,7 +52,7 @@ To deploy the required Azure resources using the Azure Portal, follow these step
 ## Importing Prerequisites Solution
 The prerequisite solution contains all the custom connectors and the environment variables needed by the SuperFam AI solution.
 
-1. Download and import the SuperFamAIPrerequisites_1_0_0_0_managed.zip solution from [SuperFam AI Prerequisites](./Packages/PowerPlatform/SuperFamAIPrerequisites_1_0_0_0_managed.zip).
+1. Download and import the SuperFamAIPrerequisites_1_0_0_0_managed.zip solution from [SuperFam AI Prerequisites](./Packages/Power Platform/SuperFamAIPrerequisites_1_0_0_0_managed.zip).
 2. It will ask you to configure environment variables.
     ![Environment Variables](./Assets/SuperFam_AI_Prerequisite_deployment.png)
 3. Provide the value of Azure AI Search Service and Search Indexer directly as it's plain text.
@@ -67,7 +67,7 @@ The prerequisite solution contains all the custom connectors and the environment
 ## Importing SuperFam AI Solution
 This solution contains the PowerAutomate flows that are needed to prepare the Database and the Copilot Agent itself.
 
-1. Download and import the SuperFamAI_1_0_0_0_managed.zip solution from [SuperFam AI Solution](./Packages/PowerPlatform/SuperFamAI_1_0_0_0_managed.zip).
+1. Download and import the SuperFamAI_1_0_0_0_managed.zip solution from [SuperFam AI Solution](./Packages/Power Platform/SuperFamAI_1_0_0_0_managed.zip).
 
 2. You will be asked to connect. 
     ![Connection](./Assets/SuperFam_AI_ConnectionReference.png)
@@ -78,7 +78,7 @@ This solution contains the PowerAutomate flows that are needed to prepare the Da
 
 To prepare the database, follow these steps:
 
-1. **Import Sample Data**: Import sample data from the `Videos` folder or use your own videos. Upload these videos to your Azure AI Video Indexer account manually, as the current system does not support automated uploads.
+1. **Import Sample Data**: Import sample data from the `Samples` folder or use your own videos. Upload these videos to your Azure AI Video Indexer account manually, as the current system does not support automated uploads.
 
 2. **Run PrepareDB PowerAutomate Flow**:
     - Navigate to the **SuperFam AI** solution and locate the `SuperFam - Prepare Video DB` Power Automate flow from the imported solution.

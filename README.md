@@ -25,6 +25,27 @@ The scope of SuperFam AI is not limited to the current features. The following i
 
 SuperFam AI goes beyond just family monitoring. Its advanced AI-driven capabilities can be adapted for multiple industries, making it a versatile solution across different sectors. Whether it’s traffic inspection, criminal investigation departments, or public safety organizations, SuperFam AI leverages real-time data processing, automation, and AI analytics to support decision-making and enhance security.
 
+![Endless Possibilities](./Assets/SuperFam_AI_EndlessPossibilities.png)
+
+## Security
+The solution is architected with **secure-by-design principles** and **follows industry-leading security best practices** to ensure data privacy, integrity, and access control at every step.
+
+1. **Vault-Driven Data Protection**
+All sensitive information, including API keys, access credentials, and configurations, is securely stored and managed using **Azure Key Vault** — providing end-to-end encryption and protecting data from unauthorized access.
+
+2. **Environment Variable Shielding**
+System environment variables are referred from Key Vault services rather than hard-coded text configurations, ensuring no sensitive data is exposed at any layer of the application.
+
+3. **Secure Custom Connectors**
+Every custom connector is designed with built-in security layers, fetching values exclusively from protected environment variables to avoid direct data exposure and ensure zero-trust data flow across services.
+
+4. **Authentication in Custom Connectors**
+Custom connectors strictly follow OAuth 2.0 protocols and API authentication best practices, ensuring that no data or service is accessible without verified user credentials.
+
+5. **Temporary Access Tokens**
+To reinforce session security, temporary access tokens are generated via supporting flows for video queries through Azure Video Indexer. These tokens are valid for only 1 hour, automatically expiring to prevent misuse and unauthorized replays.
+
+
 ## Prerequisites
 
 To get started with SuperFam AI, ensure you have the following prerequisites:
